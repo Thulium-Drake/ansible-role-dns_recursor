@@ -1,0 +1,41 @@
+# {{ ansible_managed }}
+{% for zone in dns_recursor_stub_zones %}
+stub-zone:
+      name: "{{ zone['name'] }}"
+      stub-addr: {{ zone['upstream'] }}
+      stub-no-cache: yes
+      stub-first: yes
+      stub-prime: yes
+{% endfor %}
+
+{% for zone in dns_recursor_forward_zones %}
+forward-zone:
+      name: "{{ zone['name'] }}"
+      forward-addr: {{ zone['upstream'] }}
+{% endfor %}
+
+server:
+      val-permissive-mode: no
+      do-ip6: {{ dns_recursor_ipv6_enabled | ternary('yes', 'no' ) }}
+{% if dns_recursor_ipv6_enabled %}
+      interface: ::0
+      access-control: ::/0 allow
+{% endif %}
+      interface: 0.0.0.0
+      access-control: 0.0.0.0/0 allow
+
+      local-zone: "168.192.in-addr.arpa." nodefault # disable default NXDOMAIN reply
+      local-zone: "10.in-addr.arpa." nodefault
+
+{% for zone in dns_recursor_stub_zones + dns_recursor_forward_zones %}
+{% if not zone['secure'] | default(true) %}
+      domain-insecure: "{{ zone['name'] }}"
+{% endif %}
+{% endfor %}
+
+{% for record in dns_recursor_local_records %}
+      local-zone: "{{ record['name'] }}" transparent
+      local-data: "{{ record['name'] }} {{ record['type'] }} {{ record['value'] }}"
+{% endfor %}
+
+      auto-trust-anchor-file: "/var/lib/unbound/root.key"

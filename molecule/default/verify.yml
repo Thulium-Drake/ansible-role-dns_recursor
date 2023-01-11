@@ -1,0 +1,25 @@
+---
+- name: "Verify"
+  hosts: 'all'
+  check_mode: true
+  gather_facts: false
+  tasks:
+    - name: 'Check if unbound is running'
+      service:
+        name: "{{ service }}"
+        state: 'started'
+      loop:
+        - 'unbound'
+      loop_control:
+        loop_var: 'service'
+
+    - name: 'Check if test record exists'
+      shell: 'host host.example.eu localhost | tail -n1'
+      register: 'r'
+      check_mode: false
+      changed_when: false
+      delegate_to: 'dns-recursor'
+
+    - name: 'Check result'
+      assert:
+        that: r.stdout == 'host.example.eu has address 10.1.1.1'
