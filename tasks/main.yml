@@ -7,7 +7,7 @@
 
 - name: 'Ensure firewalld'
   ansible.posix.firewalld:
-    name: 'dns'
+    service: 'dns'
     state: 'enabled'
     permanent: true
     immediate: true
