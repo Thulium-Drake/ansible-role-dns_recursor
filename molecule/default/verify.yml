@@ -14,7 +14,11 @@
         loop_var: 'service'
 
     - name: 'Check if test record exists'
-      shell: 'host host.example.eu localhost | tail -n1'
+      shell: |
+        set -o pipefail
+        host host.example.eu localhost | tail -n1
+      args:
+        executable: '/bin/bash'
       register: 'r'
       check_mode: false
       changed_when: false
