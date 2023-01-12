@@ -16,6 +16,7 @@ forward-zone:
 
 server:
       val-permissive-mode: no
+      chroot: ""
       do-ip6: {{ dns_recursor_ipv6_enabled | ternary('yes', 'no' ) }}
 {% if dns_recursor_ipv6_enabled %}
       interface: ::0
