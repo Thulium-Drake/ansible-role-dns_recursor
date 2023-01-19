@@ -47,7 +47,7 @@ local Converge(distro) = {
     name: "Test",
     steps: [
       Converge("debian11"),
-      Converge("centos8"),
+      Converge("rockylinux8"),
     ],
     volumes: [
       { name: "docker",
