@@ -3,6 +3,7 @@
 stub-zone:
       name: "{{ zone['name'] }}"
       stub-addr: {{ zone['upstream'] }}
+
       stub-no-cache: yes
       stub-first: yes
       stub-prime: yes
@@ -40,3 +41,6 @@ server:
 {% endfor %}
 
       auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+remote-control:
+      control-enable: yes
