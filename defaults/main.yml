@@ -5,14 +5,16 @@ dns_recursor_ipv6_enabled: false
 # See man unbound.conf for more information
 dns_recursor_stub_zones: []
 # - name: 'arpa.'
-#   upstream: '10.1.1.2'
+#   upstreams:
+#     - '10.1.1.2'
 #   secure: false  # Disable DNSSEC, defaults to true
 
 # Forward zones are used to retrieve records at a upstream server without recursing
 # See man unbound.conf for more information
 dns_recursor_forward_zones: []
 # - name: 'example.com'
-#   upstream: '10.1.1.2'
+#   upstreams:
+#     - '10.1.1.2'
 #   secure: false  # Disable DNSSEC, defaults to true
 
 dns_recursor_local_records: []

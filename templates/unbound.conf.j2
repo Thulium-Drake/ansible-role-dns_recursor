@@ -2,8 +2,9 @@
 {% for zone in dns_recursor_stub_zones %}
 stub-zone:
       name: "{{ zone['name'] }}"
-      stub-addr: {{ zone['upstream'] }}
-
+{% for upstream in zone['upstreams'] %}
+      stub-addr: {{ upstream }}
+{% endfor %}
       stub-no-cache: yes
       stub-first: yes
       stub-prime: yes
@@ -12,7 +13,9 @@ stub-zone:
 {% for zone in dns_recursor_forward_zones %}
 forward-zone:
       name: "{{ zone['name'] }}"
-      forward-addr: {{ zone['upstream'] }}
+{% for upstream in zone['upstreams'] %}
+      forward-addr: {{ upstream }}
+{% endfor %}
 {% endfor %}
 
 server:

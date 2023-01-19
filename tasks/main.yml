@@ -32,6 +32,12 @@
     loop_var: 'default_conf'
   when: unbound_installed['changed']
 
+- name: 'Ensure remote-control keys'
+  ansible.builtin.command: /usr/sbin/unbound-control-setup
+  register: 'unbound_control_key_update'
+  failed_when: unbound_control_key_update['rc'] != 0
+  changed_when: "'Generating' in unbound_control_key_update['stdout']"
+
 - name: 'Ensure root.key'
   ansible.builtin.command: /usr/sbin/unbound-anchor -a /var/lib/unbound/root.key
   register: 'unbound_root_key_update'
