@@ -2,29 +2,29 @@
 - name: 'Converge'
   hosts: 'all'
   vars:
-    - dns_recursor_stub_zones:
-        - name: 'example.com.'
-          upstreams:
-            - '10.1.1.1'
-            - '10.1.1.2'
-          secure: false
-        - name: 'example.net.'
-          upstreams:
-            - '10.1.1.1'
-    - dns_recursor_forward_zones:
-        - name: 'example.org'
-          upstreams:
-            - '10.1.1.1'
-          secure: false
-        - name: 'example.nl.'
-          upstreams:
-            - '10.1.1.1'
-            - '10.1.1.2'
-    - dns_recursor_local_records:
-        - name: 'host.example.eu'
-          type: 'A'
-          value: '10.1.1.1'
+    dns_recursor_stub_zones:
+      - name: 'example.com.'
+        upstreams:
+          - '10.1.1.1'
+          - '10.1.1.2'
+        secure: false
+      - name: 'example.net.'
+        upstreams:
+          - '10.1.1.1'
+    dns_recursor_forward_zones:
+      - name: 'example.org'
+        upstreams:
+          - '10.1.1.1'
+        secure: false
+      - name: 'example.nl.'
+        upstreams:
+          - '10.1.1.1'
+          - '10.1.1.2'
+    dns_recursor_local_records:
+      - name: 'host.example.eu'
+        type: 'A'
+        value: '10.1.1.1'
   tasks:
     - name: 'Run role'
-      import_role:
+      ansible.builtin.import_role:
         name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"

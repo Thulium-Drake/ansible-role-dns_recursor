@@ -52,7 +52,7 @@
     group: 'root'
     mode: '0644'
     validate: '/usr/sbin/unbound-checkconf %s'
-  notify: 'restart unbound'
+  notify: 'Restart unbound'
 
 - name: 'Ensure service'
   ansible.builtin.systemd:

@@ -5,7 +5,7 @@
   gather_facts: false
   tasks:
     - name: 'Check if unbound is running'
-      service:
+      ansible.builtin.service:
         name: "{{ service }}"
         state: 'started'
       loop:
@@ -14,7 +14,7 @@
         loop_var: 'service'
 
     - name: 'Check if test record exists'
-      shell: |
+      ansible.builtin.shell: |
         set -o pipefail
         host host.example.eu localhost | tail -n1
       args:
@@ -25,5 +25,5 @@
       delegate_to: 'dns-recursor'
 
     - name: 'Check result'
-      assert:
+      ansible.builtin.assert:
         that: r.stdout == 'host.example.eu has address 10.1.1.1'
