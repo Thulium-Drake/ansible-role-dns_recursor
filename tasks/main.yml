@@ -16,8 +16,8 @@
     permanent: true
     immediate: true
   when:
-    - ansible_facts['services']['firewalld']['state'] is defined
-    - ansible_facts['services']['firewalld']['state'] == 'running'
+    - ansible_facts['services']['firewalld.service']['state'] is defined
+    - ansible_facts['services']['firewalld.service']['state'] == 'running'
 
 - name: 'Remove default config'  # noqa no-handler
   ansible.builtin.file:
