@@ -21,3 +21,8 @@ dns_recursor_local_records: []
 # - name: 'host.example.com'
 #   type: 'A'
 #   value: '10.1.1.3'
+
+# Listen interface/port, default open to anything that can reach it
+dns_recursor_port: 53
+dns_recursor_interface_v4: '0.0.0.0'
+dns_recursor_interface_v6: '::1'

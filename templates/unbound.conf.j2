@@ -23,10 +23,11 @@ server:
       chroot: ""
       do-ip6: {{ dns_recursor_ipv6_enabled | ternary('yes', 'no' ) }}
 {% if dns_recursor_ipv6_enabled %}
-      interface: ::0
+      interface: {{ dns_recursor_interface_v6 }}
       access-control: ::/0 allow
 {% endif %}
-      interface: 0.0.0.0
+      interface: {{ dns_recursor_interface_v4 }}
+      port: {{ dns_recursor_port }}
       access-control: 0.0.0.0/0 allow
 
       local-zone: "168.192.in-addr.arpa." nodefault # disable default NXDOMAIN reply
