@@ -44,7 +44,9 @@ server:
       local-data: "{{ record['name'] }} {{ record['type'] }} {{ record['value'] }}"
 {% endfor %}
 
+{% if not dns_recursor_anchor_disabled %}
       auto-trust-anchor-file: "/var/lib/unbound/root.key"
+{% endif %}
 
 remote-control:
       control-enable: yes

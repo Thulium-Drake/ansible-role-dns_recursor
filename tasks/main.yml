@@ -43,6 +43,7 @@
   register: 'unbound_root_key_update'
   changed_when: unbound_root_key_update['rc'] == 1
   failed_when: unbound_root_key_update['rc'] > 1
+  when: not dns_recursor_anchor_disabled
 
 - name: 'Ensure unbound.conf'
   ansible.builtin.template:
@@ -53,6 +54,16 @@
     mode: '0644'
     validate: '/usr/sbin/unbound-checkconf %s'
   notify: 'Restart unbound'
+
+- name: 'Ensure sysconfig for unbound'
+  ansible.builtin.template:
+    src: 'sysconfig-unbound.conf.j2'
+    dest: '/etc/sysconfig/unbound'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: 'Restart unbound'
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - name: 'Ensure service'
   ansible.builtin.systemd:

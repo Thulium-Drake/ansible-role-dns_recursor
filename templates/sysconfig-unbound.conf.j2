@@ -1,0 +1,3 @@
+# {{ ansible_managed }}
+UNBOUND_OPTIONS=""
+DISABLE_UNBOUND_ANCHOR={{ (dns_recursor_anchor_disabled) | ternary('yes', 'no') }}

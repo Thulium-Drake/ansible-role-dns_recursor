@@ -1,6 +1,10 @@
 ---
 dns_recursor_ipv6_enabled: false
 
+# Disable fetching DNSSEC anchors
+# NOTE: only do this if you know what you're doing!
+dns_recursor_anchor_disabled: false
+
 # Stub zones are used to retrieve authoritative records at a upstream server with recursing
 # See man unbound.conf for more information
 dns_recursor_stub_zones: []
